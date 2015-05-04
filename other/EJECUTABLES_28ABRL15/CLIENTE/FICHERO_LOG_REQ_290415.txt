@@ -1,0 +1,49 @@
+--------------------------------------------------------------------------
+|                                                                        |
+|   PROCESO DE CREACION DE UNA PETICION DE CERTIFICADO 'CSR'             |
+|                                                                        |
+|   EL USUARIO CREA UN PAR DE CLAVES DE LONGITUD ARBITRARIA              |
+|                                                                        |
+|   CREACION DE FICHEROS req.pem, privkey_user.pem, publickey_user.pem   |
+|                                                                        |
+|           LUIS MENGUAL (c) 11 Noviembre 2009 (c) v.81                  |
+|                                                                        |
+|   This product includes software developed by the OpenSSL Project      |
+|   for use in the OpenSSL Toolkit. (http://www.openssl.org/).           |
+--------------------------------------------------------------------------
+
+
+PROCESO DE GENERACION DE UNA PETICION DE CERTIFICADO........ 
+
+
+FASE 1: GENERACION DE CLAVES........ 
+
+
+...Claves RSA generadas de 1024 bits
+
+* SE IMPRIME CLAVE PRIVADA: Fichero 'privkey_user.pem'
+
+
+Imprimo la clave publica Fichero 'privkey_user.pem' !!
+
+FASE 2: GENERACION DE UNA PETICION DE CERTIFICADO....... 
+
+
+INTRODUCIR DATOS PETICION DE CERTIFICADO
+<Certificate Signing Request, CSR>: ........ 
+
+
+<Intoducir los datos sin espacios en blanco>: 
+
+Correo Electronico <EmailAdress>: 23
+countryName: 23
+stateOrProvinceName: 23
+localityName: 23
+organizationName: 23
+organizationalUnitName: 23
+
+
+
+GENERADA PETICION CORRECTAMENTE !!!!....... req.pem
+
+

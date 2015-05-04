@@ -1,0 +1,22 @@
+--------------------------------------------------------------------------
+|                                                                        |
+|                      CONVERSOR A FORMATO P12                           |
+|                                                                        |
+|   DATOS DE ENTRADA:                                                    |
+|   FICHEROS cert_user.pem privkey_user.pem                              |
+|                                                                        |
+|   DATOS DE SALIDA                                                      |
+|   FICHERO cert_user.p12                                                |
+|                                                                        |
+|	        	LUIS MENGUAL (c) 11 Noviembre 2009 (c)     	    	      |
+|                                                                        |
+|   This product includes software developed by the OpenSSL Project      |
+|   for use in the OpenSSL Toolkit. (http://www.openssl.org/).           |
+--------------------------------------------------------------------------
+
+
+CARGADA LA CLAVE PRIVADA DE USUARIO 
+ --->CARGADO EL CERTIFICADO DE USUARIO 
+Creado el certificado 'cert_user.p12' correctamente!!!!
+
+

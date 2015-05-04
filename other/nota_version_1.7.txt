@@ -1,0 +1,28 @@
+
+v1.7 creamos los ejecutables para que funcion la peticion con ventana msdos
+
+V1.6 el cliente convierte el fichero cert_user.pem junto con la clave privada a un fichero 
+cert_user.p12
+
+
+V1.5 El servidor calcula la longitud del fichero cert_user.pem y se la envía al cliente. El cliente
+reserva espacio en un array de bytes. Luego el servidor envía el fichero cert_user.pem al cliente
+y este lo recibe y lo imprime a fichero
+
+
+
+
+v1.4 el servidor firma la peticion y genera el fichero cert_user.pem
+
+
+v1.3 reservamos espacio array bytes leemos el fichero req.pem en el cliente y se lo enviamos al
+servidor. El servidor reserva espacio array de bytes. El servidor recibe el fichero, lo almacena en
+el array de bytes y lo imprime a fichero req_recv.pem
+
+v1.2 calculamos en el cliente la longitud del fichero req.pem y se la enviamos al servidor.  
+
+v1.1 incorporamos la libreria openssl para crear un peticcion req.pem
+
+v1.0 version basica envio string writeUTF/readUTF  conexion SSL con almacenes de certificados 
+firmados CA
+

@@ -1,0 +1,19 @@
+ -------------------------------------------------------------------------
+|                                                                        |
+|   SISTEMA DE GENERACION DE FIRMA DE UNA SOLICITUD DE CERTIFICADO (CSR) |
+|                                                                        |
+|                                                                        |
+|   DATOS DE ENTRADA:		                                              |
+|   CERTIFICADO DE LA CA (FORMATO P12)                                   |
+|   SOLICITUD DE FIRMA                                                   |
+|                                                                        |
+|   DATOS SALIDA:                                                        |
+|   CERTIFICADO FIRMADO POR CA                                           |
+|                                                                        |
+|   LUIS MENGUAL (c) 11 Noviembre 2009 (c) v.81                          |
+|                                                                        |
+|   This product includes software developed by the OpenSSL Project      |
+|   for use in the OpenSSL Toolkit. (http://www.openssl.org/).           |
+--------------------------------------------------------------------------
+
+

@@ -1,0 +1,53 @@
+
+
+MAQUINA_CERTIFICADOS_2014_v1.8_6feb15
+
+
+En esta version en los ejecutables tenemos por fin lo que queriamos
+
+El cliente hace una peticion req.pem. Se la envia al servidor. El servidor invoca el comando CA de OpenSSL
+y crear en certificado en la carpteta CA/Newcerts. El servidor busca el ultimo certificado creado y se lo envía de 
+vuelta al cliente que construye el fichero p12.
+
+
+Para que esto funcione tenemos que usar la libreria de libreria_openssl_098i-CA_v10_rel_6feb15
+
+en que 
+
+
+
+En esta version del 
+libreria_openssl_098i-CA_v10_rel_6feb15
+
+
+
+Hemos quitado el codigo de firma y lo hemos sustituido por la función CA
+
+
+
+
+//lm5feb15
+
+	system( "openssl ca -config ./CA/myCA.cfg -in req_recv.pem -verbose" );
+
+
+Lógicamente para que funcione necesitamos la carpeta CA en el ejecutable
+
+
+
+
+En esta version de libreria hemos 
+
+
+X509_NAME_add_entry_by_txt(name,"CountryName", MBSTRING_ASC, (unsigned char *)countryName, -1, -1, 0);
+
+Por esta
+
+
+X509_NAME_add_entry_by_txt(name,"C", MBSTRING_ASC, (unsigned char *)countryName, -1, -1, 0);
+
+
+
+los ficheros req.pem que obteniamos antes no tenían la extension "C" y no funcionaban con el comando ca de openssl
+
+Importante conutry name debe de tener solo dos caracteres para que se pueda meter el certificado en la BD
