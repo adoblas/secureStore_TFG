@@ -11,7 +11,7 @@ package adoblas.ssl;
 
  keytool -export -alias CertificadoAutofirmado -keystore AlmacenSR -rfc -file CertAutofirmado.cer
 
- y finalmente crea un almacen trust con el certificado de clave p�blica (sin clave privada)
+ y finalmente crea un almacen trust con el certificado de clave publica (sin clave privada)
 
  keytool -import -alias CertificadoAutofirmado -file CertAutofirmado.cer -keystore AlmacenTrust
 
@@ -26,6 +26,8 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import javax.net.ssl.*; // Para SSLSockets
+
+import org.slf4j.Logger;
 
 import java.io.*; //ENTRADA SALIDA
 
@@ -67,16 +69,16 @@ public class EchoServer implements Runnable {
 
 		System.setProperty("javax.net.ssl.keyStorePassword", "oooooo");
 
-		SSLServerSocketFactory sslserversocketfactory = (SSLServerSocketFactory) SSLServerSocketFactory
-				.getDefault();
+		SSLServerSocketFactory sslserversocketfactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 
 		SSLServerSocket sslserversocket = null;
 		try {
-			sslserversocket = (SSLServerSocket) sslserversocketfactory
-					.createServerSocket(9999);
+			sslserversocket = (SSLServerSocket) sslserversocketfactory.createServerSocket(9999);
+			System.out.println("********* SOCKET CREADO ***************");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			System.out.println("********* ERROR AL CREAR SOCKETFACTORY ***************");
 		}
 
 		System.out.println("SERVIDOR ECO ESPERANDO PTO 9999 ....... ");
@@ -87,14 +89,17 @@ public class EchoServer implements Runnable {
 		for (int i = 0; i < cifradores.length; i++) {
 			System.out.println("support:  " + cifradores[i]);
 		}
+		
+		System.out.print("***** Familia Negociada en la sesion....");
 
-		System.out.print("�selecionar familia?: (s/n)");
+		System.out.print("Selecionar familia: (s/n)");
 		Scanner sc1 = new Scanner(System.in);
 		String str1 = sc1.nextLine();
 
 		String s = "s";
 		String n = "n";
 
+		
 		if (s.equals(str1))
 
 		{
@@ -138,7 +143,7 @@ public class EchoServer implements Runnable {
 
 		{
 
-			try {
+			try {//SSL_RSA_WITH_RC4_128_SHA
 
 				SSLSocket sslsocket = (SSLSocket) sslserversocket.accept();
 
@@ -147,8 +152,6 @@ public class EchoServer implements Runnable {
 
 				DataOutputStream Flujo_s = new DataOutputStream(Flujo_salida);
 				DataInputStream Flujo_e = new DataInputStream(Flujo_entrada);
-
-				String string = null;
 
 				sslsocket.getSupportedCipherSuites();
 
@@ -281,8 +284,10 @@ public class EchoServer implements Runnable {
 
 				// codigo buscar certificado en carpeta newcerts
 
-				String mycert = ".\\CA\\newcerts\\" + ficheros[aux].getName();
-
+				//String mycert = ".\\CA\\newcerts\\" + ficheros[aux].getName();
+				String mycert = System.getProperty("user.dir") + "/src/main/resources/CA/newcerts/" + ficheros[aux].getName();
+				
+				
 				System.out.println("mycert: " + mycert);
 
 				// File mi_fichero = new File ( "cert_user.pem" );

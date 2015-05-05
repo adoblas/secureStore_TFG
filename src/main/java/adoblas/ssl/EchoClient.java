@@ -4,7 +4,7 @@ package adoblas.ssl;
 
 
  El cliente SSL carga el fichero AlmacenTrust creado  con la herramienta Keytool conteniendo el
- certificado de clave p�blica del servidor
+ certificado de clave publica del servidor
 
 
  */
@@ -18,19 +18,22 @@ import java.security.cert.X509Certificate;
 import java.util.*;
 
 public class EchoClient {
-	public static void
-
-	main(String[] arstring) {
+	public EchoClient() {
 		try {
 
-			String dirip;
+			String dirIP = System.getProperty("IP", "127.0.0.1");
+			int puerto = Integer.parseInt(System.getProperty("port", "9999"));
 
 			System.setProperty("javax.net.debug", "ssl");
 
-			System.setProperty("javax.net.ssl.trustStore", "AlmacenTrust");
+
+			System.setProperty("javax.net.ssl.trustStore",
+					System.getProperty("user.dir")
+							+ "/src/main/resources/AlmacenTrust");
+			//System.setProperty("javax.net.ssl.trustStore", "AlmacenTrust");
 
 			// esto no hace falta
-			// System.setProperty("javax.net.ssl.keyStorePassword", "oooooo");
+			//System.setProperty("javax.net.ssl.keyStorePassword", "oooooo");
 
 			System.out.println("\n\n\n");
 
@@ -55,22 +58,12 @@ public class EchoClient {
 
 			System.out.println("\n\n\n");
 
-			InputStreamReader Flujo = new InputStreamReader(System.in);
-			BufferedReader teclado = new BufferedReader(Flujo);
-			System.out.print("Direccion IP: ");
-			dirip = teclado.readLine();
-			// System.out.println("la direccion IP metida es:"+dirip );
+		
+			
+			SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
-			System.out.print("Puerto:");
-			Scanner sc = new Scanner(System.in);
-			String pto = sc.nextLine();
-			int ptoint = Integer.parseInt(pto);
+			SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket(dirIP, puerto);
 
-			SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory
-					.getDefault();
-
-			SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket(
-					dirip, ptoint);
 			System.out.println("CREADO SOCKET SSL");
 
 			OutputStream Flujo_salida = sslsocket.getOutputStream();
@@ -78,8 +71,6 @@ public class EchoClient {
 
 			DataOutputStream Flujo_s = new DataOutputStream(Flujo_salida);
 			DataInputStream Flujo_e = new DataInputStream(Flujo_entrada);
-
-			String string = null;
 
 			SSLSession sesion = sslsocket.getSession();
 
@@ -104,12 +95,10 @@ public class EchoClient {
 
 			System.out.println("Propietario: " + certificate.getSubjectDN());
 			System.out.println("Emisor: " + certificate.getIssuerDN());
-			System.out
-					.println("Numero Serie: " + certificate.getSerialNumber());
+			System.out.println("Numero Serie: " + certificate.getSerialNumber());
 			System.out.println("to string: " + certificate.toString());
 
-			System.out
-					.println("**********************************************************************");
+			System.out.println("**********************************************************************");
 			System.out.println("\n\n\n");
 
 			// IMPRIMIMOS EL CERTIFICADO
@@ -120,21 +109,15 @@ public class EchoClient {
 			os.write(buf);
 			os.close();
 
-			/*
-			 * String mensaje = "mensaje cliente"; Flujo_s.writeUTF(mensaje);
-			 */
-
 			libreria_openssl_098i una_libreria_openssl_098i = new libreria_openssl_098i();
 			una_libreria_openssl_098i.crear_peticion();
 
 			File mi_fichero = new File("req.pem");
 			long tamano_req = mi_fichero.length();
-			System.out.println("Tamano calculado fich req.pem: " + tamano_req
-					+ " Bytes");
+			System.out.println("Tamano calculado fich req.pem: " + tamano_req + " Bytes");
 
 			// envio longitud fichero req.pem
-			System.out.println("envio longitud fichero: " + tamano_req
-					+ " Bytes");
+			System.out.println("envio longitud fichero: " + tamano_req + " Bytes");
 			Flujo_s.writeLong(tamano_req);
 
 			// creo espacio para leer fichero
@@ -150,8 +133,7 @@ public class EchoClient {
 			Flujo_s.write(buffer_req);
 
 			long num_recibido_cert_user = Flujo_e.readLong();
-			System.out.println("LONG RECIBIDA cert_user.pem....... "
-					+ num_recibido_cert_user);
+			System.out.println("LONG RECIBIDA cert_user.pem....... " + num_recibido_cert_user);
 
 			// creo espacio para leer fichero
 			byte[] buffer_cert_user_CL = new byte[(int) num_recibido_cert_user];
@@ -161,13 +143,10 @@ public class EchoClient {
 			int NumBytesLeidos_SR = 0;
 			long long_recibida_fich = 0;
 
-			FileOutputStream Fichero_req_SR = new FileOutputStream(
-					"cert_user_CL.pem");
+			FileOutputStream Fichero_req_SR = new FileOutputStream("cert_user_CL.pem");
 
 			do
-
 			{
-
 				NumBytesLeidos_SR = Flujo_e.read(buffer_cert_user_CL);
 
 				long_recibida_fich = long_recibida_fich + NumBytesLeidos_SR;
@@ -177,13 +156,11 @@ public class EchoClient {
 				System.out.println("Recibiendo Fichero ...");
 
 				System.out.println("NumBytesLeidos : " + NumBytesLeidos_SR);
-				System.out
-						.println("ENVIADO HASTA AHORA: " + long_recibida_fich);
+				System.out.println("ENVIADO HASTA AHORA: " + long_recibida_fich);
 
 			} while (long_recibida_fich < num_recibido_cert_user);
 
-			System.out.println("FICHERO IMPRESO DE LONGITUD: "
-					+ long_recibida_fich);
+			System.out.println("FICHERO IMPRESO DE LONGITUD: " + long_recibida_fich);
 
 			Fichero_req_SR.close();
 
@@ -191,10 +168,8 @@ public class EchoClient {
 
 			System.out.println("IMPRIMIMOS FICHERO cert_user.pem....... ");
 
-			// libreria_openssl_098i una_libreria_openssl_098i = new
-			// libreria_openssl_098i();
-			una_libreria_openssl_098i.convertir_p12("cert_user_CL.pem",
-					"privkey_user.pem", "ppppp", "cert_user.p12");
+
+			una_libreria_openssl_098i.convertir_p12("cert_user_CL.pem","privkey_user.pem", "ppppp", "cert_user.p12");
 
 			System.out.println("IMPRIMIMOS FICHERO cert_user.p12....... ");
 
