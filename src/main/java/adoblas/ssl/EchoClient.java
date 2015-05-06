@@ -29,7 +29,7 @@ public class EchoClient {
 
 			System.setProperty("javax.net.ssl.trustStore",
 					System.getProperty("user.dir")
-							+ "/src/main/resources/AlmacenTrust");
+							+ "/target/classes/AlmacenTrust");
 			//System.setProperty("javax.net.ssl.trustStore", "AlmacenTrust");
 
 			// esto no hace falta

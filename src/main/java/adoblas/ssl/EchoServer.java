@@ -28,12 +28,16 @@ import java.util.*;
 import javax.net.ssl.*; // Para SSLSockets
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*; //ENTRADA SALIDA
 
 public class EchoServer implements Runnable {
+		private final static Logger logger = LoggerFactory.getLogger("server");
 
 	public static void main() {
+		
+
 		PrintStream p;
 
 		System.out.println("\n\n");
@@ -57,18 +61,32 @@ public class EchoServer implements Runnable {
 
 		System.out.println("\n");
 
+
+		
 		System.setProperty("javax.net.debug", "ssl");
+
+//		System.setProperty("javax.net.ssl.keyStore",
+//				System.getProperty("user.dir")
+//						+ "/src/main/resources/AlmacenSR");
 
 		System.setProperty("javax.net.ssl.keyStore",
 				System.getProperty("user.dir")
-						+ "/src/main/resources/AlmacenSR");
+						+ "/target/classes/AlmacenSR");
 
+		
 		// System.setProperty(
 		// "javax.net.ssl.keyStore",
 		// ClassLoader.getSystemClassLoader().getResourceAsStream("AlmacenSR").toString());
 
 		System.setProperty("javax.net.ssl.keyStorePassword", "oooooo");
 
+		
+		logger.info("**** Setting System_Properties ****");
+		logger.info("javax.net.debug [must be \"ssl\"]= " + System.getProperty("javax.net.debug"));
+		logger.info("javax.net.ssl.keyStore  [must be \"AlmacenSR\"]= " + System.getProperty("javax.net.ssl.keyStore"));
+		logger.info("javax.net.ssl.keyStorePassword  [must be \"oooooo\"]= " + System.getProperty("javax.net.ssl.keyStorePassword"));
+
+		
 		SSLServerSocketFactory sslserversocketfactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 
 		SSLServerSocket sslserversocket = null;
@@ -80,18 +98,21 @@ public class EchoServer implements Runnable {
 			e1.printStackTrace();
 			System.out.println("********* ERROR AL CREAR SOCKETFACTORY ***************");
 		}
-
-		System.out.println("SERVIDOR ECO ESPERANDO PTO 9999 ....... ");
+		
+		logger.info("**** Server listening on pto 9999 ****");
+		//System.out.println("SERVIDOR ECO ESPERANDO PTO 9999 ....... ");
 
 		// OBTENEMOS TODAS LA FAMILIAS DE CIFRADORES
-
+		logger.info("**** Server Ciphers ****");
 		String[] cifradores = sslserversocket.getSupportedCipherSuites();
 		for (int i = 0; i < cifradores.length; i++) {
 			System.out.println("support:  " + cifradores[i]);
 		}
 		
-		System.out.print("***** Familia Negociada en la sesion....");
+		//System.out.print("***** Familia Negociada en la sesion....");
+		logger.info("********");
 
+		/*
 		System.out.print("Selecionar familia: (s/n)");
 		Scanner sc1 = new Scanner(System.in);
 		String str1 = sc1.nextLine();
@@ -131,7 +152,7 @@ public class EchoServer implements Runnable {
 
 			System.out.println("Familia Negociada en la Sesion \n");
 
-		}
+		}*/
 
 		// SERVIDOR SIN AUTENTICACION DEL CLIENTE
 
@@ -240,7 +261,7 @@ public class EchoServer implements Runnable {
 
 				String tmp;
 				String sDirectorio = System.getProperty("user.dir")
-						+ "/src/main/resources/CA/newcerts";
+						+ "/target/classes/CA/newcerts";
 
 				File ftemp = new File(".");
 				File[] ficherostemp = ftemp.listFiles();
@@ -285,7 +306,7 @@ public class EchoServer implements Runnable {
 				// codigo buscar certificado en carpeta newcerts
 
 				//String mycert = ".\\CA\\newcerts\\" + ficheros[aux].getName();
-				String mycert = System.getProperty("user.dir") + "/src/main/resources/CA/newcerts/" + ficheros[aux].getName();
+				String mycert = System.getProperty("user.dir") + "/target/classes/CA/newcerts/" + ficheros[aux].getName();
 				
 				
 				System.out.println("mycert: " + mycert);
