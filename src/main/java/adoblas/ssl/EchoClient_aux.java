@@ -17,12 +17,13 @@ import javax.net.ssl.*;
 import java.security.cert.X509Certificate;
 import java.util.*;
 
-public class EchoClient2 {
-	public EchoClient2() {
+public class EchoClient_aux {
+	public static void
+
+	main(String[] arstring) {
 		try {
 
-			String dirIP = System.getProperty("IP", "127.0.0.1");
-			int puerto = Integer.parseInt(System.getProperty("port", "9999"));
+			String dirip;
 
 			System.setProperty("javax.net.debug", "ssl");
 
@@ -56,21 +57,20 @@ public class EchoClient2 {
 
 			InputStreamReader Flujo = new InputStreamReader(System.in);
 			BufferedReader teclado = new BufferedReader(Flujo);
-			// System.out.print("Direccion IP: " );
-			// dirip=teclado.readLine();
+			System.out.print("Direccion IP: ");
+			dirip = teclado.readLine();
 			// System.out.println("la direccion IP metida es:"+dirip );
 
-			// System.out.print("Puerto:" );
-			// Scanner sc =new Scanner(System.in);
-			// String pto= sc.nextLine();
-			// int ptoint= Integer.parseInt(pto);
-			//
+			System.out.print("Puerto:");
+			Scanner sc = new Scanner(System.in);
+			String pto = sc.nextLine();
+			int ptoint = Integer.parseInt(pto);
 
 			SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory
 					.getDefault();
 
 			SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket(
-					dirIP, puerto);
+					dirip, ptoint);
 			System.out.println("CREADO SOCKET SSL");
 
 			OutputStream Flujo_salida = sslsocket.getOutputStream();
